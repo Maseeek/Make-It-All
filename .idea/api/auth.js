@@ -22,14 +22,13 @@ async function executeAuthRequest(endpoint, data) {
         return responseData;
 
     } catch (error) {
-        console.error("(auth.js) Error logging in: ", error.message);
+        console.error(`(auth.js) Error in ${endpoint}: `, error.message);
         throw error;
 
     }
 }
 
-async function handleToken(data){{}
-    const token = data.token;
+function handleToken(token){
     if (!token) {
         throw new Error("No token received.");
     }
@@ -45,14 +44,15 @@ export async function login(identifier, password) {
 
 
 
-export async function logout() {
+export function logout() {
     localStorage.removeItem("authToken");
     // when user logs out, we clear the auth token so that we do not grant access to account after logging out
 }
 
-async function register(email, password){
+export async function register(email, password){
     const data = await executeAuthRequest('register', {email, password });
-    handleToken(data);
+    const token = data.token;
+    handleToken(token);
     return data;
 }
 
