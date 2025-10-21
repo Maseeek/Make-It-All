@@ -2,22 +2,31 @@
   "name": "make-it-all",
   "version": "0.1.0",
   "description": "The best forum/to-do list thing ever!",
-  "main": "server/index.js",
+  "type": "module",
   "scripts": {
-    "dev": "echo 'Development server not yet configured'",
-    "build": "echo 'Build script not yet configured'",
-    "start": "echo 'Start script not yet configured'",
-    "test": "echo 'Test script not yet configured'"
+    "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
+    "dev:client": "cd client && npm run dev",
+    "dev:server": "cd server && npm run dev",
+    "build": "cd client && npm run build",
+    "start": "cd server && npm start",
+    "test": "echo 'Test script not yet configured'",
+    "install:all": "npm install && cd client && npm install && cd ../server && npm install"
   },
   "keywords": [
     "forum",
     "todo",
-    "task-management"
+    "task-management",
+    "react",
+    "vite",
+    "nodejs"
   ],
   "author": "",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/Maseeek/Make-It-All.git"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
   }
 }
