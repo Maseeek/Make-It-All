@@ -6,7 +6,7 @@ const port = 9000;
 app.use(express.static('public'));
 
 //Test API endpoint
-app.get('/api/test', (req, res) => {
+app.get('/', (req, res) => {
     res.json({message: 'API Test'})
 });
 

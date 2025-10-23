@@ -2,9 +2,9 @@
   "name": "team_project",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "example.js",
   "scripts": {
-    "test": "temporary_server.js"
+    "test": "example_server.js"
   },
   "keywords": [],
   "author": "",
