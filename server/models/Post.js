@@ -11,16 +11,16 @@
 // - canBeShared (boolean)
 // - createdAt, updatedAt
 
-export default {};
+//DDL: 
+//'CREATE TABLE Post (
+//    PostID INT PRIMARY KEY AUTOINCREMENT,
+//    topicId INT NOT NULL,
+//    content TEXT NOT NULL,
+//    authorId INT NOT NULL,
+//    isEdited BOOLEAN DEFAULT FALSE,
+//    canBeShared BOOLEAN DEFAULT TRUE,
+//    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+//    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
+//);'
 
-class Post {
-    constructor(topicId, content, authorId, isEdited=false, canBeShared=false, createdAt, updatedAt) {
-        this.topicId = topicId;
-        this.content = content;
-        this.authorId = authorId;
-        this.isEdited = isEdited;
-        this.canBeShared = canBeShared;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
-}
+export default {};

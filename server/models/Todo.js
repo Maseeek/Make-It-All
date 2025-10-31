@@ -28,19 +28,3 @@
 //    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
 
 export default {};
-
-class Todo {
-    constructor(title, description, status, assignedTo, projectId=null,
-         priority, dueDate, createdBy, createdAt, updatedAt) {
-        this.title = title;
-        this.description = description;
-        this.status = status;
-        this.assignedTo = assignedTo;
-        this.projectId = projectId;
-        this.priority = priority;
-        this.dueDate = dueDate;
-        this.createdBy = createdBy;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
-}

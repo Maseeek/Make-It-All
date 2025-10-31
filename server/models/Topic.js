@@ -21,17 +21,3 @@
 //    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
 //    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
 //);'
-
-class Topic {
-    constructor(title, description, createdBy, isLocked=false, isPinned=false, createdAt, updatedAt) {
-        this.title = title;
-        this.description = description;
-        this.createdBy = createdBy;
-        this.isLocked = isLocked;
-        this.isPinned = isPinned;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
-}
-
-export default {};
