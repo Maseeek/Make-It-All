@@ -57,7 +57,7 @@ export default function Register() {
     };
     return (
         <div className="register-page">
-            <Navbar />
+            {/*<Navbar /> we dont have a navbar rn but think it could add a lot*/}
             <div className="register-background">
                 <div className="register-container">
                     <header>
