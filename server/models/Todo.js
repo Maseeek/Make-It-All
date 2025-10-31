@@ -26,5 +26,6 @@
 //    dueDate DATETIME,
 //    createdBy INT NOT NULL,
 //    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-
+//    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
+//);'
 export default {};
