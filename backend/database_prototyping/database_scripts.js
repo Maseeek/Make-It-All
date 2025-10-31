@@ -32,7 +32,7 @@ const DummyDDLScript = () => {
         UpdatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
     );
 
-    CREATE TABLE tblTodo (
+    CREATE TABLE IF NOT EXISTS tblTodo (
         TodoID INTEGER PRIMARY KEY AUTOINCREMENT,
         Title VARCHAR(255) NOT NULL,
         Description TEXT,
