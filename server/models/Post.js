@@ -12,15 +12,15 @@
 // - createdAt, updatedAt
 
 //DDL: 
-//'CREATE TABLE Post (
-//    PostID INT PRIMARY KEY AUTOINCREMENT,
-//    topicId INT NOT NULL,
-//    content TEXT NOT NULL,
-//    authorId INT NOT NULL,
-//    isEdited BOOLEAN DEFAULT FALSE,
-//    canBeShared BOOLEAN DEFAULT TRUE,
-//    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-//    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
-//);'
+// CREATE TABLE IF NOT EXISTS tblPost (
+//     PostID INT PRIMARY KEY AUTO_INCREMENT,
+//     TopicID INT NOT NULL,
+//     Content TEXT NOT NULL,
+//     AuthorID INT NOT NULL,
+//     IsEdited BOOLEAN DEFAULT FALSE,
+//     CanBeShared BOOLEAN DEFAULT TRUE,
+//     CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+//     UpdatedAt DATETIME DEFAULT NULL
+// );
 
 export default {};

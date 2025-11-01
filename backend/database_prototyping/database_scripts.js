@@ -111,4 +111,86 @@ const InsertValuesScript = () => {
     `
 }
 
-export { createTablesScript, InsertValuesScript, DropTablesScript };
+//DML Scripts:
+//1. Select all Manager and Project Manager emails and roles from tblUsers
+const selectEmailRoleScript = () => {
+    return `SELECT Email, Role FROM tblUser WHERE (Role='MANAGER' OR Role='PROJECT_MANAGER')`
+}
+
+//2. Select the UserIDs, emails and roles and To-Do IDs (alongside To-Do Titles)
+//  of everyone with completed To-Do Lists
+const selectCompletedListsScript = () => {
+    return `
+    SELECT 
+        tblUser.UserID,
+        tblUser.Email,
+        tblUser.Role,
+        tblTodo.TodoID AS 'To-Do ID',
+        tblTodo.Title AS 'Topic Title'
+    FROM 
+        tblUser INNER JOIN tblTodo ON tblUser.UserID = tblTodo.AssignedTo
+    WHERE 
+        Status = 'completed'
+    ;
+    `
+}
+
+//3. Select all updated posts of each pinned topic from Project Managers only
+const selectPostsScript = () => {
+    return `
+    SELECT
+        tblPost.PostID,
+        tblPost.Content,
+        tblPost.UpdatedAt,
+        tblUser.Email AS "Author Email",
+        tblTopic.Title AS "Topic Title"
+    FROM tblPost
+        INNER JOIN tblUser ON tblPost.AuthorID = tblUser.UserID
+        INNER JOIN tblTopic ON tblPost.TopicID = tblTopic.TopicID
+    WHERE
+        tblTopic.IsPinned = 1
+        AND tblPost.UpdatedAt IS NOT NULL
+        AND tblUser.Role = 'PROJECT_MANAGER'
+    ;
+    `
+}
+
+
+//4. Select all edited and unpinned posts and topics of manager and admin owners
+//  with pending to-do lists.
+const selectConditonFourScript = () => {
+    return `
+    SELECT
+        tblUser.UserID,
+        tblUser.Email,
+        tblUser.Role,
+        tblPost.PostID,
+        tblPost.Content,
+        tblTopic.Title AS "Topic Title",
+        tblTodo.TodoID,
+        tblTodo.Status
+    FROM tblUser
+        INNER JOIN tblPost ON tblUser.UserID = tblPost.AuthorID
+        INNER JOIN tblTopic ON tblPost.TopicID = tblTopic.TopicID
+        INNER JOIN tblTodo ON tblUser.UserID = tblTodo.AssignedTo
+    WHERE
+        tblPost.IsEdited = 1
+        AND tblTopic.IsPinned = 0
+        AND tblUser.Role IN ("MANAGER", "ADMIN")
+        AND tblTodo.Status = 'pending'
+    ;
+    `
+}
+
+export { 
+    //DDL
+    createTablesScript,
+    InsertValuesScript,
+    DropTablesScript,
+
+    //DML
+    selectEmailRoleScript,
+    selectCompletedListsScript,
+    selectPostsScript,
+    selectConditonFourScript
+};

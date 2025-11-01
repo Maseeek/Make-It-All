@@ -15,17 +15,17 @@
 // - createdAt, updatedAt
 
 //DDL (change if erroneous):
-//'CREATE TABLE Todo (
-//    TodoID INT PRIMARY KEY AUTOINCREMENT,
-//    title VARCHAR(255) NOT NULL,
-//    description TEXT,
-//    status VARCHAR(255) DEFAULT 'pending',
-//    assignedTo INT NOT NULL,
-//    projectId INT,
-//    priority VARCHAR(255),
-//    dueDate DATETIME,
-//    createdBy INT NOT NULL,
-//    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-//    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
-//);'
+// CREATE TABLE IF NOT EXISTS tblTodo (
+//     TodoID INT PRIMARY KEY AUTO_INCREMENT,
+//     Title VARCHAR(191) NOT NULL,
+//     Description TEXT,
+//     Status VARCHAR(191) DEFAULT 'pending',
+//     AssignedTo INT NOT NULL,
+//     ProjectID INT,
+//     Priority VARCHAR(20),
+//     DueDate DATETIME,
+//     CreatedBy INT NOT NULL,
+//     CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+//     UpdatedAt DATETIME DEFAULT NULL
+// );`
 export default {};

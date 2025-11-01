@@ -11,8 +11,16 @@
 
 const {
     createTablesScript,
-    DropTablesScript
+    DropTablesScript,
+    InsertValuesScript,
+
+    selectEmailRoleScript,
+    selectCompletedListsScript,
+    selectPostsScript,
+    selectConditonFourScript
+
 } = require("./mysql_database_scripts.js");
+
 const path = require('path');
 //"__dirname" = Currently active directory
 const testDatabase = require(path.join(__dirname, "mysql_db_config.js"));
@@ -37,6 +45,27 @@ async function connectionTest() {
         //Multiple statements in one string need to be split and executed individually
         await multiExecuteProcedure(DropTablesScript());
         await multiExecuteProcedure(createTablesScript());
+        await multiExecuteProcedure(InsertValuesScript());
+
+        //Outputs the rows selected and its metadata
+        // const selectResult = await testDatabase.execute(selectEmailRoleScript());
+        // console.log(selectResult);
+        // console.log("\n ---------- \n");
+
+        //Outputs just the rows selected
+        let [rowsSelected] = await testDatabase.execute(selectEmailRoleScript());
+        console.log(rowsSelected);
+
+        [rowsSelected] = await testDatabase.execute(selectCompletedListsScript());
+        console.log(rowsSelected);
+
+        [rowsSelected] = await testDatabase.execute(selectPostsScript());
+        console.log(rowsSelected);
+
+        [rowsSelected] = await testDatabase.execute(selectConditonFourScript());
+        console.log(rowsSelected);
+
+        console.log("SQL scripts executed successfully.");
 
         
 

@@ -1,4 +1,4 @@
-//Dummy database is run using SQLite, actual database will use MySQL
+//Dummy database is run using SQLite and MySQL, actual database will use MySQL
 //Testing will be done on MySQL on university servers
 //SQLite was chosen since it is similar enough to MySQL and
 //easy to set up for prototyping

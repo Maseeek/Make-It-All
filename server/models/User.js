@@ -19,13 +19,13 @@ export const UserRoles = {
 // - createdAt, updatedAt
 
 //DDL:
-//'CREATE TABLE User (
-//    UserID INT PRIMARY KEY AUTOINCREMENT,
-//    email VARCHAR(255) UNIQUE NOT NULL,
-//    password VARCHAR(255) NOT NULL,
-//    role VARCHAR(20) NOT NULL,
-//    accountStatus BOOLEAN,
-//    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-//    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
-//);'
+  // CREATE TABLE IF NOT EXISTS tblUser (
+  //     UserID INT PRIMARY KEY AUTO_INCREMENT,
+  //     Email VARCHAR(191) UNIQUE NOT NULL,
+  //     Password TEXT NOT NULL,
+  //     Role VARCHAR(20) NOT NULL,
+  //     AccountStatus BOOLEAN DEFAULT TRUE,
+  //     CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  //     UpdatedAt DATETIME DEFAULT NULL
+  // );
 export default {};

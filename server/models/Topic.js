@@ -11,13 +11,13 @@
 // - createdAt, updatedAt
 
 //DDL: 
-//'CREATE TABLE Topic (
-//    TopicID INT PRIMARY KEY AUTOINCREMENT,
-//    title VARCHAR(255) NOT NULL,
-//    description TEXT,
-//    createdBy INT NOT NULL,
-//    isLocked BOOLEAN DEFAULT FALSE,
-//    isPinned BOOLEAN DEFAULT FALSE,
-//    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-//    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
-//);'
+// CREATE TABLE IF NOT EXISTS tblTopic (
+//     TopicID INT PRIMARY KEY AUTO_INCREMENT,
+//     Title VARCHAR(191) NOT NULL,
+//     Description TEXT,
+//     CreatedBy INT NOT NULL,
+//     IsLocked BOOLEAN DEFAULT FALSE,
+//     IsPinned BOOLEAN DEFAULT FALSE,
+//     CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+//     UpdatedAt DATETIME DEFAULT NULL
+// );

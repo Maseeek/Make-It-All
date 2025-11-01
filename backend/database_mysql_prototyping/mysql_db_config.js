@@ -20,7 +20,6 @@ const pool = mysql.createPool({
     connectionLimit: 10,
     queueLimit: 0,
     ssl: false, //Disabled or else server connection fails
-    multipleStatements: true //Allows multiple SQL statements per query
 });
 
 //Deletes sensitive info from the cfg object
