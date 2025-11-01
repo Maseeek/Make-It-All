@@ -33,10 +33,6 @@ const multiExecuteProcedure = async (queryString) => {
 
 async function connectionTest() {
     try {
-        //Example DML query
-        const [rows] = await testDatabase.query("SELECT * from db_connection_test");
-        console.table(rows);
-
         //Example DDL queries
         //Multiple statements in one string need to be split and executed individually
         await multiExecuteProcedure(DropTablesScript());
