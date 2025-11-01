@@ -1,12 +1,11 @@
+//NOTE: Files mentioned below contain fake information, real credentials
+//will be hidden on university server
+
 //mysql import is required here
 const mysql = require('mysql2/promise');
 const path = require('path');
 
 //Manual switch between test and prod config
-//NOTE: Files mentioned below contain fake information, real credentials
-// will be hidden on university server
-//Run this file in your terminal on the server to test the connection
-
 const configFile = 'test_config.json';
 //const configFile = 'prod_config.json';
 
@@ -20,7 +19,8 @@ const pool = mysql.createPool({
     ...cfg,
     connectionLimit: 10,
     queueLimit: 0,
-    ssl: false //Disabled or else server connection fails
+    ssl: false, //Disabled or else server connection fails
+    multipleStatements: true //Allows multiple SQL statements per query
 });
 
 //Deletes sensitive info from the cfg object
