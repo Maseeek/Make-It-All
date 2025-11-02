@@ -1,27 +1,42 @@
 import Topic from "../../../types/Topic";
 
-// TODO: should be req, for now just use localstorage
-export function getTopics(): Topic[] {
-  let res = localStorage.getItem("topics") || "[]";
-  let data = JSON.parse(res) as any[];
+const BASE_URL = window.location.origin + "/api/forum";
 
-  let topics = data.map((x) => {
+export async function getTopics(): Promise<Topic[]> {
+  const response = await fetch(`${BASE_URL}/topics`);
+  if (!response.ok) {
+    throw new Error("Failed to fetch topics");
+  }
+  return ((await response.json()) as any[]).map((x) => {
     let topic = new Topic("");
-    return Object.assign(topic, x);
+    Object.assign(topic, x);
+    return topic;
   });
-  return topics;
 }
 
 // TODO: should be req, for now just use localstorage
-export function addTopic(topic: Topic): void | string {
-  let list = getTopics();
-  list.push(topic);
-  // TODO: check id doesn't conflict
-  localStorage.setItem("topics", JSON.stringify(list));
+export async function addTopic(topic: Topic): Promise<void | string> {
+  let list = await getTopics();
+  if (list.find((x) => x.TopicID === topic.TopicID)) {
+    return "Topic with this ID already exists.";
+  }
+  const response = await fetch(`${BASE_URL}/topics`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(topic),
+  });
+  if (!response.ok) {
+    throw new Error("Failed to add topic");
+  }
 }
 
-export function removeTopic(id: string): void {
-  let list = getTopics();
-  list = list.filter((x) => x.id !== id);
-  localStorage.setItem("topics", JSON.stringify(list));
+export async function removeTopic(id: string): Promise<void> {
+  const response = await fetch(`${BASE_URL}/topics/${id}`, {
+    method: "DELETE",
+  });
+  if (!response.ok) {
+    throw new Error("Failed to remove topic");
+  }
 }

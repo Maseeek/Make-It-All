@@ -1,20 +1,13 @@
 export default class Topic {
-    name: string
-    id: string
+  Title: string;
+  TopicID: string;
 
+  constructor(title: string) {
+    this.Title = title;
+    this.TopicID = title.replaceAll(/\W/g, "_");
+  }
 
+  createPost() {}
 
-    constructor(name: string) {
-        this.name = name;
-        this.id = name.replaceAll(/\W/g, "_")
-    }
-
-    createPost() {
-
-    }
-
-    sharePost() {
-
-    }
-
+  sharePost() {}
 }

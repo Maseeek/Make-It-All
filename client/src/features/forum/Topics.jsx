@@ -1,54 +1,84 @@
+import React, { useEffect, useState } from "react";
 import { getTopics, addTopic, removeTopic } from "../../services/forum";
 import Topic from "../../../../types/Topic";
 import "../../styles/index.css";
 import { useNavigate } from "react-router-dom";
 
-// Forum topic list component
-// Displays all forum topics
-
+// Simple hooks-based forum topic list component
 export default function TopicList() {
   const nav = useNavigate();
+  const [topics, setTopics] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  function newTopic() {
-    let name = prompt("Enter topic name:");
+  useEffect(() => {
+    let mounted = true;
 
-    let topic = new Topic(name);
-    let res = addTopic(topic);
-    if (!res) {
-      window.location.reload();
+    async function load() {
+      try {
+        const t = await getTopics();
+        if (mounted) setTopics(t || []);
+      } catch (err) {
+        if (mounted) setError(err?.message || String(err));
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    }
+
+    load();
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  async function newTopic() {
+    const Title = prompt("Enter topic Title:");
+    if (!Title) return;
+    try {
+      const topic = new Topic(Title);
+      await addTopic(topic);
+      // refresh list after add
+      const t = await getTopics();
+      setTopics(t || []);
+    } catch (err) {
+      setError(err?.message || String(err));
     }
   }
 
   function goToTopic(id) {
     nav("/forum/" + id);
   }
-  function remove(id) {
-    let sure = confirm("Are you sure you want to delete this topic?");
-    if (sure) {
-      removeTopic(id);
-      window.location.reload();
+
+  async function remove(id) {
+    const sure = confirm("Are you sure you want to delete this topic?");
+    if (!sure) return;
+    try {
+      await removeTopic(id);
+      setTopics((prev) => prev.filter((x) => x.topicID !== id));
+    } catch (err) {
+      setError(err?.message || String(err));
     }
   }
 
-  let topics = getTopics();
+  if (loading) return <div>Loading topics…</div>;
+  if (error) return <div className="error">Error: {error}</div>;
+
   return (
     <div>
       <h2>Forum Topics</h2>
       <div className="topiclist">
         {topics.map((topic, i) => (
           <div
-            key={i}
+            key={topic.topicID || i}
             className="topicitem"
-            onClick={() => {
-              goToTopic(topic.id);
-            }}
+            onClick={() => goToTopic(topic.topicID)}
           >
-            <div>{topic.name}</div>
+            <div>{topic.Title}</div>
             <div
               className="cross"
               onClick={(e) => {
                 e.stopPropagation();
-                remove(topic.id);
+                remove(topic.topicID);
               }}
             >
               ✕
@@ -62,7 +92,6 @@ export default function TopicList() {
           </div>
         </div>
       </div>
-      {/* <p>List of all topics will appear here</p> */}
     </div>
   );
 }

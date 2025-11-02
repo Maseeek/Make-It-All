@@ -11,19 +11,18 @@ import {
 } from "./database_scripts.js";
 
 //Function that runs the DDL script (Reads from a JS function returning the DDL string)
-const runDDLScript = async function () {
-  const db = new sqlite3.Database("./server/db/sqlite/data.db");
+export const runDDLScript = async function () {
+  const db = new sqlite3.Database("./data.db");
 
   try {
     //Executes the DDL script chosen (or all if uncommented)
-    await db.exec(DropTablesScript());
-    await db.exec(createTablesScript());
-    await db.exec(InsertValuesScript());
+    db.exec(DropTablesScript());
+    db.exec(createTablesScript());
+    db.exec(InsertValuesScript());
   } catch (error) {
-    console.error("Error running DDL script:", error);
+    console.error("Error running DDL script:");
+    console.error(error);
   } finally {
     db.close();
   }
 };
-
-runDDLScript();
