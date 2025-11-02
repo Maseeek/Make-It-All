@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './styles/App.css'
+import RegisterPage from './features/auth/Register.jsx'
 
 function App() {
   return (
@@ -12,7 +13,10 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<div>Welcome to Make-It-All</div>} />
+
             {/* Add more routes here */}
+            <Route path={"/login"} element={<div>Login Page</div>} />
+            <Route path={"/register"} element={<RegisterPage />} />
           </Routes>
         </main>
       </div>
