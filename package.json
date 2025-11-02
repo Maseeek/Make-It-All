@@ -30,6 +30,8 @@
     "concurrently": "^8.2.2"
   },
   "dependencies": {
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7",
     "lucide-react": "^0.552.0"
   }
 }
