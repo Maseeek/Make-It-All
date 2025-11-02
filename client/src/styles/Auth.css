@@ -119,11 +119,14 @@ body {
     z-index: 1;
 }
 
-.input-group input {
+/* --- SEAMLESS STYLES --- */
+/* 1. Combined styles for both input and select */
+.input-group input,
+.input-group > select {
     width: 100%;
-    padding: 18px 18px 18px 50px; /* Taller inputs */
+    padding: 18px 18px 18px 50px; /* Unified padding */
     font-size: 1rem;
-    font-family: var(--font-main), serif;
+    font-family: var(--font-main); /* Use var, not var() fallback */
 
     /* Semi-transparent "glass" inputs */
     background-color: rgba(0, 0, 0, 0.2);
@@ -136,13 +139,29 @@ body {
     box-sizing: border-box;
 }
 
+/* 2. Styles unique to <select> */
+.input-group > select {
+    /* Reset browser defaults */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    /* Add a custom dropdown arrow */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23999' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 1.25rem center;
+    background-repeat: no-repeat;
+    background-size: 1.25em;
+}
+
+/* 3. Styles unique to <input> */
 .input-group input::placeholder {
     color: transparent; /* Label acts as placeholder */
 }
 
+/* 4. Unified label position */
 .input-group label {
     position: absolute;
-    left: 50px;
+    left: 50px; /* Matches padding */
     top: 50%;
     transform: translateY(-50%);
     color: #999;
@@ -153,9 +172,11 @@ body {
     white-space: nowrap;
 }
 
-/* Floating label behavior */
+/* 5. Unified floating label behavior */
 .input-group input:focus + label,
-.input-group input:not(:placeholder-shown) + label {
+.input-group input:not(:placeholder-shown) + label,
+.input-group > select:focus + label,
+.input-group > select:valid + label {
     top: 0px;
     transform: translateY(-50%) scale(0.85);
     left: 42px;
@@ -165,13 +186,15 @@ body {
     font-weight: 500;
 }
 
-.input-group input:focus {
+/* 6. Unified focus state */
+.input-group input:focus,
+.input-group > select:focus {
     border-color: var(--color-accent);
     box-shadow: 0 0 0 3px var(--color-accent-focus-ring);
     outline: none;
 }
 
-/* Improved Autofill styles to match glass theme */
+/* 7. Unified Autofill styles (for input) */
 .input-group input:-webkit-autofill,
 .input-group input:-webkit-autofill:hover,
 .input-group input:-webkit-autofill:focus,
@@ -180,6 +203,7 @@ body {
     -webkit-text-fill-color: #ffffff !important;
     caret-color: #ffffff !important;
     border-color: var(--color-border-glass);
+    font-family: var(--font-main); /* Ensure autofill matches font */
 }
 
 .input-group input:-webkit-autofill + label {
@@ -190,6 +214,14 @@ body {
     background-color: rgb(22, 22, 22);
     font-weight: 500;
 }
+
+/* 8. Style the dropdown options */
+.input-group > select option {
+    background-color: #1f1f1f; /* Match the dark theme */
+    color: #ffffff;
+}
+
+/* --- End Seamless Styles --- */
 
 .password-toggle {
     position: absolute;
@@ -240,17 +272,26 @@ body {
     letter-spacing: 0.8px;
 }
 
-.submit-button:hover {
+.submit-button:disabled {
+    background: #555;
+    color: #999;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    filter: none;
+}
+
+.submit-button:not(:disabled):hover {
     /* "Glow and lift" effect */
     transform: translateY(-3px);
     box-shadow: 0 8px 25px rgba(159, 85, 255, 0.3);
     filter: brightness(1.1);
 }
 
-.submit-button:active {
+.submit-button:not(:disabled):active {
     /* Satisfying "press" effect */
     transform: translateY(-1px);
-    box-shadow: 0 4px 15px rgba(159, 85, 255, 0.2);
+    box-s_hadow: 0 4px 15px rgba(159, 85, 255, 0.2);
     filter: brightness(0.95);
 }
 
@@ -261,6 +302,10 @@ body {
     margin-top: 15px;
     min-height: 1.2em;
     line-height: 1.4;
+}
+
+.outcome.outcome-success {
+    color: #30db63; /* Added a success class */
 }
 
 .form-footer {
@@ -306,3 +351,4 @@ body {
         transform: translateY(0) scale(1);
     }
 }
+

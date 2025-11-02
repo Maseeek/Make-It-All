@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import '../../styles/Auth.css';
 import {register} from "../../services/auth.js";
-import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
+import { UserCog, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 
 export default function Register() {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
         confirmPassword: '',
+        accountType: '',
     });
 
     const [notification, setNotification] = useState(null);
@@ -24,15 +25,35 @@ export default function Register() {
         setFormData({ ...formData, [id]: value });
     };
 
+    const checkPasswordStrength = (password) => {
+        if (password.length < 8) {
+            return "Password must be at least 8 characters long!";
+        }
+        if (!/[A-Z]/.test(password)) {
+            return "Password must contain at least one uppercase letter!";
+        }
+        if (!/[a-z]/.test(password)) {
+            return "Password must contain at least one lowercase letter!";
+        }
+        if (!/[0-9]/.test(password)) {
+            return "Password must contain at least one digit!";
+        }
+        if (!/[^a-zA-Z0-9]/.test(password)) {
+            return "Password must contain at least one special character!";
+        }
+        // All checks passed
+        return null;
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         setNotification(null);
 
-        const { email, password, confirmPassword } = formData;
+        const { email, password, confirmPassword, accountType } = formData; // Make sure to get accountType from state
 
+        // --- Validation Checks ---
         if (!email.toLowerCase().endsWith("@make-it-all.co.uk")) {
-            setNotification({ type: 'error', text: "Email must end in @make-it-all.co.uk\'" });
+            setNotification({ type: 'error', text: "Email must end in @make-it-all.co.uk" });
             return;
         }
 
@@ -41,10 +62,19 @@ export default function Register() {
             return;
         }
 
+        // Check password strength
+        const passwordError = checkPasswordStrength(password);
+        if (passwordError) {
+            // If we got an error message, show it and stop
+            setNotification({ type: 'error', text: passwordError });
+            return;
+        }
+
+        // --- All Validations Passed ---
         setLoading(true);
 
         try {
-            await register(email, password);
+            await register(email, password, accountType);
             setNotification({ type: 'success', text: 'Successfully Registered. Now redirecting ...' });
 
             setTimeout(() => {
@@ -54,7 +84,7 @@ export default function Register() {
         } catch (err) {
             const errorMessage = err?.message || 'Registration failed.';
             setNotification({ type: 'error', text: errorMessage });
-            setLoading(false);
+            setLoading(false); // Only set loading false on error
         }
     };
 
@@ -130,6 +160,23 @@ export default function Register() {
                             >
                                 {showConfirmPassword ? <Eye size={22} /> : <EyeOff size={22} />}
                             </button>
+                        </div>
+
+                        <div className="input-group">
+                            <span className="input-icon"><UserCog size={20} /></span>
+                            <select
+                                id="accountType"
+                                value={formData.accountType}
+                                onChange={handleChange}
+                                required
+                                disabled={loading}
+                            >
+                                <option value="" disabled></option>
+                                <option value="technicalSpecialist">Technical Specialist</option>
+                                <option value="PM">Project Manager</option>
+                                <option value="admin">Administrator</option>
+                            </select>
+                            <label htmlFor="accountType">Account Type</label>
                         </div>
 
                         <button
