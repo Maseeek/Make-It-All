@@ -10,6 +10,8 @@ export default function Dashboard() {
       <p>TODO: Task allocation and project progress overview</p>
 
               <Link to="/forum">Go to forum</Link> |{" "}
+                <Link to="/login">Login</Link> |{" "}
+                <Link to="/register">Register</Link>
     </div>
   )
 }

@@ -49,8 +49,8 @@ export function logout() {
     // when user logs out, we clear the auth token so that we do not grant access to account after logging out
 }
 
-export async function register(email, password){
-    const data = await executeAuthRequest('register', {email, password });
+export async function register(email, password, accountType) {
+    const data = await executeAuthRequest('register', {email, password, accountType });
     const token = data.token;
     handleToken(token);
     return data;
