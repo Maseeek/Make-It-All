@@ -19,14 +19,14 @@ app.get('/api/health', (req, res) => {
 });
 
 // Import routes (to be implemented)
-// import authRoutes from './routes/auth.js';
-// import todoRoutes from './routes/todos.js';
-// import forumRoutes from './routes/forum.js';
+import authRoutes from './routes/auth.js';
+import todoRoutes from './routes/todos.js';
+import forumRoutes from './routes/forum.js';
 
 // Use routes
-// app.use('/api/auth', authRoutes);
-// app.use('/api/todos', todoRoutes);
-// app.use('/api/forum', forumRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/todos', todoRoutes);
+app.use('/api/forum', forumRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

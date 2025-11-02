@@ -1,7 +1,10 @@
-const BACKEND_URL = "www.putdbackendhere.com";
+// const BACKEND_URL = "www.putdbackendhere.com";
+
+
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 async function executeAuthRequest(endpoint, data) {
     try {
-        const response = await fetch(`${BACKEND_URL}/api/${endpoint}`, {
+        const response = await fetch(`${BACKEND_URL}/api/auth/${endpoint}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
