@@ -14,4 +14,18 @@
 // - createdBy (userId)
 // - createdAt, updatedAt
 
+//DDL (change if erroneous):
+// CREATE TABLE IF NOT EXISTS tblTodo (
+//     TodoID INT PRIMARY KEY AUTO_INCREMENT,
+//     Title VARCHAR(191) NOT NULL,
+//     Description TEXT,
+//     Status VARCHAR(191) DEFAULT 'pending',
+//     AssignedTo INT NOT NULL,
+//     ProjectID INT,
+//     Priority VARCHAR(20),
+//     DueDate DATETIME,
+//     CreatedBy INT NOT NULL,
+//     CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+//     UpdatedAt DATETIME DEFAULT NULL
+// );`
 export default {};

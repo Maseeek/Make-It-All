@@ -1,7 +1,10 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import './styles/App.css'
-import RegisterPage from './features/auth/Register.jsx'
-import LoginPage from './features/auth/Login.jsx'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "./styles/App.css";
+import Dash from "./features/dashboard/Dashboard";
+import Topics from "./features/forum/Topics.jsx";
+import Posts from "./features/forum/Posts.jsx";
+import RegisterPage from "./features/auth/Register.jsx";
+import LoginPage from "./features/auth/Login.jsx";
 
 function App() {
   return (
@@ -13,8 +16,10 @@ function App() {
         {/*</header>*/}
         <main>
           <Routes>
-            <Route path="/" element={<div>Welcome to Make-It-All</div>} />
-
+            {/* default to dashboard */}
+            <Route path="/" element={<Dash />} />
+            <Route path="/forum" element={<Topics />} />
+            <Route path="/forum/:id" element={<Posts />} />
             {/* Add more routes here */}
             <Route path={"/login"} element={<LoginPage />} />
             <Route path={"/register"} element={<RegisterPage />} />
@@ -22,7 +27,7 @@ function App() {
         </main>
       </div>
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;
