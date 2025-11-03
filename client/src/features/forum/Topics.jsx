@@ -19,6 +19,12 @@ export default function TopicList() {
         const t = await getTopics();
         if (mounted) setTopics(t || []);
       } catch (err) {
+        // if the error type is 401, navigate to login
+        if (err?.message === "401") {
+          nav("/login");
+          return;
+        }
+
         if (mounted) setError(err?.message || String(err));
       } finally {
         if (mounted) setLoading(false);

@@ -34,6 +34,12 @@ export default function PostList() {
       } catch (error) {
         console.error("Error fetching posts:");
         console.error(error);
+        // if the error type is 401, navigate to login
+        if (error?.message === "401") {
+          nav("/login");
+          return;
+        }
+
         setError(error);
       } finally {
         setLoading(false);

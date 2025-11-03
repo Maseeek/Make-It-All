@@ -3,10 +3,11 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 const router = express.Router();
+export const SECRET = "TEMPSECRET1212";
 
 // --- Mock Database ---
 // In a real app, you'd fetch this from your database
-const saltRounds = 10;
+export const saltRounds = 10;
 const MOCK_USER = {
   id: "user-001",
   email: "maciek@make-it-all.co.uk",
@@ -38,79 +39,84 @@ router.post("/register", async (req, res) => {
         error: `Registration is only allowed for ${allowedDomain} emails.`,
       });
     }
-
-    // --- TODO: Check if user already exists in your database ---
-    // const existingUser = await db.users.find(u => u.email === email);
-    // if (existingUser) {
-    //     return res.status(409).json({ error: 'User with this email already exists.' });
-    // }
-
-    // Simulating user check
-    if (email === MOCK_USER.email) {
-      return res
-        .status(409)
-        .json({ error: "User with this email already exists." });
-    }
-
-    // 2. Hash the password
-    const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
-
     const db = req.app.locals.db;
-
-    db.run(
-      "INSERT INTO tblUser (Email, Password, Role) VALUES (?, ?, ?)",
-      [email, hashedPassword, accountType],
-      function (error) {
-        if (error) {
-          console.error("Error inserting user into database:", error);
-          return res
-            .status(500)
-            .json({ error: "Failed to register user in database." });
-        }
-      }
-    );
-
-    let id = db.get(
-      "SELECT UserID FROM tblUser WHERE Email = ?",
+    // check user doesn't already exist
+    db.get(
+      "SELECT * FROM tblUser WHERE Email = ?",
       [email],
-      (err, row) => {
+      async (err, row) => {
         if (err) {
-          console.error("Error retrieving user ID:", err);
+          console.error("Error checking existing user:", err);
           return res
             .status(500)
-            .json({ error: "Failed to retrieve user ID from database." });
+            .json({ error: "Database error during registration." });
         }
-        id = row.UserID;
+        if (row) {
+          return res
+            .status(409)
+            .json({ error: "User with this email already exists." }); // 409 = Conflict
+        }
+
+        // 2. Hash the password
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+        db.run(
+          "INSERT INTO tblUser (Email, Password, Role) VALUES (?, ?, ?)",
+          [email, hashedPassword, accountType],
+          function (error) {
+            if (error) {
+              console.error("Error inserting user into database:", error);
+              return res
+                .status(500)
+                .json({ error: "Failed to register user in database." });
+            }
+
+            let id = db.get(
+              "SELECT UserID FROM tblUser WHERE Email = ?",
+              [email],
+              (err, row) => {
+                if (err) {
+                  console.error("Error retrieving user ID:", err);
+                  return res
+                    .status(500)
+                    .json({
+                      error: "Failed to retrieve user ID from database.",
+                    });
+                }
+                id = row.UserID;
+
+                const userId = id; // Get this ID from your database response
+
+                // 4. Create a JWT (JSON Web Token)
+                const token = jwt.sign(
+                  {
+                    userId: userId, // Use the new user's ID from your database
+                    email: email,
+                    accountType: accountType,
+                  },
+                  SECRET, // Your secret key from .env
+                  { expiresIn: EXPIRES } // Expiration from .env
+                );
+
+                // --- Send Response ---
+                // Send the token back to the client
+                res.status(201).json({
+                  message: "User registered successfully!",
+                  token: token, // Send the real token
+                });
+              }
+            );
+          }
+        );
       }
     );
-
-    const userId = id; // Get this ID from your database response
-
-    // 4. Create a JWT (JSON Web Token)
-    const token = jwt.sign(
-      {
-        userId: userId, // Use the new user's ID from your database
-        email: email,
-        accountType: accountType,
-      },
-      SECRET, // Your secret key from .env
-      { expiresIn: EXPIRES } // Expiration from .env
-    );
-
-    // --- Send Response ---
-    // Send the token back to the client
-    res.status(201).json({
-      message: "User registered successfully!",
-      token: token, // Send the real token
-    });
   } catch (error) {
     console.error("Error in /register route:", error.message);
     res.status(500).json({ error: "Server error during registration." });
   }
 });
 
-const SECRET = "TEMPSECRET1212";
 // POST /api/auth/login
 // Login with staff email and password
 router.post("/login", async (req, res) => {
@@ -124,15 +130,6 @@ router.post("/login", async (req, res) => {
         .status(400)
         .json({ error: "Email/Identifier and password are required." });
     }
-
-    // // --- TODO: Fetch user from your database by email/identifier ---
-    // // const user = await db.users.find(u => u.email === identifier);
-
-    // // Simulating database fetch
-    // let user = null;
-    // if (identifier === MOCK_USER.email) {
-    //   user = MOCK_USER;
-    // }
 
     let db = req.app.locals.db;
     let resu = null;

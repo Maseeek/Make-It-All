@@ -1,7 +1,26 @@
 import express from "express";
 import * as db from "../db/sqlite/database_scripts.js";
 
+import { isAuthorized, hasRoles } from "../middleware/auth.js";
+
 const router = express.Router();
+
+router.use(isAuthorized);
+router.use((req, res, next) => {
+  // for all deletes, need admin
+  if (req.method === "DELETE") {
+    return hasRoles("admin")(req, res, next);
+  }
+  next();
+});
+
+// for all posts, need tech specialist
+router.use((req, res, next) => {
+  if (req.method === "POST") {
+    return hasRoles("technical_specialist", "admin")(req, res, next);
+  }
+  next();
+});
 
 // GET /api/forum/topics
 // Get all forum topics
@@ -56,9 +75,8 @@ router.post("/topics", (req, res) => {
   const { Title, Description } = req.body;
   console.log(`Creating topic: ${Title} - ${Description}`);
   db.run(
-    // TODO: fix created by
-    "INSERT INTO tblTopic (Title, Description, CreatedBy) VALUES (?, ?, 1)",
-    [Title, Description],
+    "INSERT INTO tblTopic (Title, Description, CreatedBy) VALUES (?, ?, ?)",
+    [Title, Description, req.user.userId],
     (error) => {
       if (error) {
         res.status(500).json({ msg: "Failed to create topic", error });
@@ -98,8 +116,7 @@ router.post("/topics/:id/posts", (req, res) => {
 
   db.run(
     "INSERT INTO tblPost (Content, TopicID, AuthorID) VALUES (?, ?, ?)",
-    // TODO: fix author ID
-    [Content, topicId, 1],
+    [Content, topicId, req.user.userId],
     (error) => {
       if (error) {
         res.status(500).json({ msg: "Failed to create post", error });
