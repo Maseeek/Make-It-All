@@ -3,19 +3,24 @@ import Topic from "../../../types/Topic";
 import { getCurrentToken } from "./auth";
 
 const BASE_URL = window.location.origin + "/api/forum";
-const reqHeaders = new Headers();
-reqHeaders.append("Authorization", `Bearer ${getCurrentToken()}`);
 
 export async function getTopics(): Promise<Topic[]> {
+  const reqHeaders = new Headers();
+  reqHeaders.append("Authorization", `Bearer ${getCurrentToken()}`);
+
   const req = new Request(`${BASE_URL}/topics`, {
     method: "GET",
     headers: reqHeaders,
   });
+
   const response = await fetch(req);
 
   if (!response.ok) {
     // if 401 throw specific error
     if (response.status === 401) {
+      console.log("Unauthorized access - removing token");
+      // delete local token
+      localStorage.removeItem("authToken");
       throw new Error("401");
     }
     throw new Error("Failed to fetch topics");
@@ -27,6 +32,9 @@ export async function getTopics(): Promise<Topic[]> {
   });
 }
 export async function getTopic(id: string): Promise<Topic | null> {
+  const reqHeaders = new Headers();
+  reqHeaders.append("Authorization", `Bearer ${getCurrentToken()}`);
+
   const req = new Request(`${BASE_URL}/topics/${id}`, {
     method: "GET",
     headers: reqHeaders,
@@ -35,6 +43,9 @@ export async function getTopic(id: string): Promise<Topic | null> {
   if (!response.ok) {
     // if 401 throw specific error
     if (response.status === 401) {
+      console.log("Unauthorized access - removing token");
+      // delete local token
+      localStorage.removeItem("authToken");
       throw new Error("401");
     }
 
@@ -47,6 +58,9 @@ export async function getTopic(id: string): Promise<Topic | null> {
 }
 
 export async function addTopic(topic: Topic): Promise<void | string> {
+  const reqHeaders = new Headers();
+  reqHeaders.append("Authorization", `Bearer ${getCurrentToken()}`);
+
   let list = await getTopics();
   if (list.find((x) => x.TopicID === topic.TopicID)) {
     return "Topic with this ID already exists.";
@@ -62,6 +76,9 @@ export async function addTopic(topic: Topic): Promise<void | string> {
 }
 
 export async function removeTopic(id: string): Promise<void> {
+  const reqHeaders = new Headers();
+  reqHeaders.append("Authorization", `Bearer ${getCurrentToken()}`);
+
   const req = new Request(`${BASE_URL}/topics/${id}`, {
     method: "DELETE",
     headers: reqHeaders,
@@ -73,6 +90,9 @@ export async function removeTopic(id: string): Promise<void> {
 }
 
 export async function getPosts(topicId: string): Promise<any[]> {
+  const reqHeaders = new Headers();
+  reqHeaders.append("Authorization", `Bearer ${getCurrentToken()}`);
+
   const req = new Request(`${BASE_URL}/topics/${topicId}/posts`, {
     method: "GET",
     headers: reqHeaders,
@@ -85,6 +105,9 @@ export async function getPosts(topicId: string): Promise<any[]> {
 }
 
 export async function addPost(topicId: string, post: Post): Promise<void> {
+  const reqHeaders = new Headers();
+  reqHeaders.append("Authorization", `Bearer ${getCurrentToken()}`);
+
   const req = new Request(`${BASE_URL}/topics/${topicId}/posts`, {
     method: "POST",
     headers: {
@@ -100,6 +123,9 @@ export async function addPost(topicId: string, post: Post): Promise<void> {
 }
 
 export async function removePost(postId: string): Promise<void> {
+  const reqHeaders = new Headers();
+  reqHeaders.append("Authorization", `Bearer ${getCurrentToken()}`);
+
   const req = new Request(`${BASE_URL}/posts/${postId}`, {
     method: "DELETE",
     headers: reqHeaders,

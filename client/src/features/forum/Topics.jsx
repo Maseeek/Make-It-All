@@ -80,7 +80,12 @@ export default function TopicList() {
             className="topicitem"
             onClick={() => goToTopic(topic.TopicID)}
           >
-            <div>{topic.Title}</div>
+            <div className="inner">
+              <span className="oneline">
+                {topic.Title}
+                <span className="desc"> - {topic.Description}</span>
+              </span>
+            </div>
             <div
               className="cross"
               onClick={(e) => {
