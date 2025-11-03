@@ -1,10 +1,11 @@
 export default class Topic {
   Title: string;
-  TopicID: string;
+  TopicID?: string;
+  Description?: string;
 
-  constructor(title: string) {
+  constructor(title: string, description?: string) {
     this.Title = title;
-    this.TopicID = title.replaceAll(/\W/g, "_");
+    this.Description = description;
   }
 
   createPost() {}

@@ -15,22 +15,56 @@ router.get("/topics", (req, res) => {
     }
   });
 });
+// GET /api/forum/topics/:id
+// Get a specific topic by ID
+router.get("/topics/:id", (req, res) => {
+  const db = req.app.locals.db;
+  let topicId = req.params.id;
+
+  db.get(
+    "SELECT * FROM tblTopic WHERE TopicID = ?",
+    [topicId],
+    (error, row) => {
+      if (error) {
+        res.status(500).json({ msg: "Failed to retrieve topic", error });
+      } else {
+        res.json(row);
+      }
+    }
+  );
+});
+
+// DELETE /api/forum/topics/:id
+// Delete a topic by ID
+router.delete("/topics/:id", (req, res) => {
+  const db = req.app.locals.db;
+  let topicId = req.params.id;
+
+  db.run("DELETE FROM tblTopic WHERE TopicID = ?", [topicId], function (error) {
+    if (error) {
+      res.status(500).json({ msg: "Failed to delete topic", error });
+    } else {
+      res.json({ deletedRows: this.changes });
+    }
+  });
+});
 
 // POST /api/forum/topics
 // Create a new topic
 router.post("/topics", (req, res) => {
   const db = req.app.locals.db;
-  const { title, description } = req.body;
+  const { Title, Description } = req.body;
+  console.log(`Creating topic: ${Title} - ${Description}`);
   db.run(
     // TODO: fix created by
     "INSERT INTO tblTopic (Title, Description, CreatedBy) VALUES (?, ?, 1)",
-    [title, description],
+    [Title, Description],
     (error) => {
       if (error) {
         res.status(500).json({ msg: "Failed to create topic", error });
         console.error(error);
       } else {
-        res.status(201).json({ status: 200 });
+        res.status(201).json({ status: 201 });
       }
     }
   );
@@ -59,21 +93,36 @@ router.get("/topics/:id/posts", (req, res) => {
 // Create a new post under a topic
 router.post("/topics/:id/posts", (req, res) => {
   const db = req.app.locals.db;
-  const { content } = req.body;
+  const { Content } = req.body;
   const topicId = req.params.id;
 
   db.run(
     "INSERT INTO tblPost (Content, TopicID, AuthorID) VALUES (?, ?, ?)",
     // TODO: fix author ID
-    [content, topicId, 1],
+    [Content, topicId, 1],
     (error) => {
       if (error) {
         res.status(500).json({ msg: "Failed to create post", error });
+        console.error(error);
       } else {
-        res.status(201).json({ status: 200 });
+        res.status(201).json({ status: 201 });
       }
     }
   );
 });
 
+// DELETE /api/forum/posts/:id
+// Delete a post by ID
+router.delete("/posts/:id", (req, res) => {
+  const db = req.app.locals.db;
+  let postId = req.params.id;
+
+  db.run("DELETE FROM tblPost WHERE PostID = ?", [postId], function (error) {
+    if (error) {
+      res.status(500).json({ msg: "Failed to delete post", error });
+    } else {
+      res.json({ deletedRows: this.changes });
+    }
+  });
+});
 export default router;

@@ -1,3 +1,4 @@
+import Post from "../../../types/Post";
 import Topic from "../../../types/Topic";
 
 const BASE_URL = window.location.origin + "/api/forum";
@@ -13,8 +14,17 @@ export async function getTopics(): Promise<Topic[]> {
     return topic;
   });
 }
+export async function getTopic(id: string): Promise<Topic | null> {
+  const response = await fetch(`${BASE_URL}/topics/${id}`);
+  if (!response.ok) {
+    throw new Error("Failed to fetch topic");
+  }
+  const data = await response.json();
+  let topic = new Topic("");
+  Object.assign(topic, data);
+  return topic;
+}
 
-// TODO: should be req, for now just use localstorage
 export async function addTopic(topic: Topic): Promise<void | string> {
   let list = await getTopics();
   if (list.find((x) => x.TopicID === topic.TopicID)) {
@@ -38,5 +48,35 @@ export async function removeTopic(id: string): Promise<void> {
   });
   if (!response.ok) {
     throw new Error("Failed to remove topic");
+  }
+}
+
+export async function getPosts(topicId: string): Promise<any[]> {
+  const response = await fetch(`${BASE_URL}/topics/${topicId}/posts`);
+  if (!response.ok) {
+    throw new Error("Failed to fetch posts");
+  }
+  return await response.json();
+}
+
+export async function addPost(topicId: string, post: Post): Promise<void> {
+  const response = await fetch(`${BASE_URL}/topics/${topicId}/posts`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(post),
+  });
+  if (!response.ok) {
+    throw new Error("Failed to add post");
+  }
+}
+
+export async function removePost(postId: string): Promise<void> {
+  const response = await fetch(`${BASE_URL}/posts/${postId}`, {
+    method: "DELETE",
+  });
+  if (!response.ok) {
+    throw new Error("Failed to remove post");
   }
 }

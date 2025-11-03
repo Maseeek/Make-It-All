@@ -33,9 +33,10 @@ export default function TopicList() {
 
   async function newTopic() {
     const Title = prompt("Enter topic Title:");
-    if (!Title) return;
+    const Description = prompt("Enter topic Description:");
+    if (!Title || !Description) return;
     try {
-      const topic = new Topic(Title);
+      const topic = new Topic(Title, Description);
       await addTopic(topic);
       // refresh list after add
       const t = await getTopics();
@@ -54,7 +55,7 @@ export default function TopicList() {
     if (!sure) return;
     try {
       await removeTopic(id);
-      setTopics((prev) => prev.filter((x) => x.topicID !== id));
+      setTopics((prev) => prev.filter((x) => x.TopicID !== id));
     } catch (err) {
       setError(err?.message || String(err));
     }
@@ -69,16 +70,16 @@ export default function TopicList() {
       <div className="topiclist">
         {topics.map((topic, i) => (
           <div
-            key={topic.topicID || i}
+            key={topic.TopicID || i}
             className="topicitem"
-            onClick={() => goToTopic(topic.topicID)}
+            onClick={() => goToTopic(topic.TopicID)}
           >
             <div>{topic.Title}</div>
             <div
               className="cross"
               onClick={(e) => {
                 e.stopPropagation();
-                remove(topic.topicID);
+                remove(topic.TopicID);
               }}
             >
               ✕
