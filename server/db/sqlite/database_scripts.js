@@ -118,16 +118,25 @@ const InsertValuesScript = () => {
 
     INSERT INTO user_todo
     VALUES
-    (10001, 1, 'Re-design Database Schema', 'Create an efficient database schema for the new project management tool.', 'in_progress', 'high', '2023-11-15 10:00:00', 1, '2025-08-01 11:45:52', '2025-10-31 17:58:36'),
-    (10002, 2, 'Implement Authentication Module', 'Develop a secure authentication module with JWT and OAuth2 support.', 'pending', 'medium', '2023-12-01 09:30:00', 2, '2025-08-05 14:20:10', '2025-10-30 10:15:22'),
-    (10003, 3, 'Order New Toolboxes', 'Research and order new toolboxes for the technical team.', 'completed', 'low', '2023-10-20 16:00:00', 3, '2025-09-10 08:15:33', '2025-10-29 12:40:55'),
+    (10001, 12, 'Re-design Database Schema', 'Create an efficient database schema for the new project management tool.', 'in_progress', 'high', '2023-11-15 10:00:00', 1, '2025-08-01 11:45:52', '2025-10-31 17:58:36'),
+    (10002, 12, 'Implement Authentication Module', 'Develop a secure authentication module with JWT and OAuth2 support.', 'pending', 'medium', '2023-12-01 09:30:00', 2, '2025-08-05 14:20:10', '2025-10-30 10:15:22'),
+    (10003, 32, 'Order New Toolboxes', 'Research and order new toolboxes for the technical team.', 'completed', 'low', '2023-10-20 16:00:00', 3, '2025-09-10 08:15:33', '2025-10-29 12:40:55'),
     (10004, 4, 'Set Up Development Environment', 'Configure IDEs, linters, and version control for the development team.', 'in_progress', 'high', '2023-11-05 14:00:00', 4, '2025-09-15 10:30:45', '2025-10-28 09:55:12'),
-    (10005, 5, 'Conduct User Training Sessions', 'Organize training sessions for end-users on the new project management tool.', 'pending', 'medium', '2023-12-10 11:00:00', 5, '2025-10-01 13:45:20', '2025-10-27 15:30:50'),
+    (10005, 12, 'Conduct User Training Sessions', 'Organize training sessions for end-users on the new project management tool.', 'pending', 'medium', '2023-12-10 11:00:00', 5, '2025-10-01 13:45:20', '2025-10-27 15:30:50'),
     (10006, 6, 'Optimize Database Queries', 'Analyze and optimize slow database queries to improve performance.', 'in_progress', 'high', '2023-11-20 15:30:00', 6, '2025-10-05 09:25:15', '2025-10-31 11:05:35'),
     (10007, 7, 'Update Project Documentation', 'Revise and update the project documentation for the new features added.', 'pending', 'low', '2023-12-15 10:30:00', 7, '2025-10-10 14:40:50', '2025-10-29 13:15:25'),
     (10008, 8, 'Implement Notification System', 'Develop a notification system to alert users of important updates.', 'in_progress', 'medium', '2023-11-25 09:00:00', 8, '2025-10-12 16:55:05', '2025-10-30 09:45:15'),
     (10009, 9, 'Perform Security Audit', 'Conduct a comprehensive security audit of the application and infrastructure.', 'pending', 'high', '2023-12-20 13:00:00', 9, '2025-10-15 11:10:30', '2025-10-18 18:20:40'),
     (10010, 10, 'Plan Team Building Activities', 'Organize team building activities to enhance collaboration and morale.', 'completed', 'low', '2023-10-30 12:00:00', 10, '2025-10-20 09:35:45', '2025-10-20 08:30:55')
+    ;
+
+    -- add some proj tasks for userid 12
+
+    INSERT INTO proj_tasks
+    VALUES
+    (20001, 12, 'Design Project Architecture', 'Outline the architecture for the new project management tool.', 'in_progress', 'high', '2023-11-10 10:00:00', 3, '2025-08-15 10:20:30', '2025-10-31 16:45:50'),
+    (20002, 12, 'Set Up CI/CD Pipeline', 'Implement a continuous integration and deployment pipeline using GitHub Actions.', 'pending', 'medium', '2023-12-05 09:30:00', 1, '2025-09-01 14:10:15', '2025-10-30 11:25:40'),
+    (20003, 12, 'Conduct Code Reviews', 'Establish a code review process to ensure code quality and consistency.', 'completed', 'low', '2023-10-25 16:00:00', 2, '2025-09-20 08:45:50', '2025-10-29 13:55:30')
     ;
     `;
 };

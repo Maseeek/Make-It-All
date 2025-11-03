@@ -64,3 +64,20 @@ export async function register(email, password, accountType) {
 export function getCurrentToken() {
   return localStorage.getItem("authToken");
 }
+export function getCurrentUser() {
+  const token = getCurrentToken();
+  if (!token) return null;
+  try {
+    const payload = JSON.parse(atob(token.split(".")[1]));
+    return payload;
+  } catch (e) {
+    console.error("Error parsing token payload: ", e);
+    return null;
+  }
+}
+
+export async function getUserRole() {
+  const user = getCurrentUser();
+  if (!user) throw new Error("401");
+  return user.accountType; // assuming the token payload has an 'accountType' field
+}

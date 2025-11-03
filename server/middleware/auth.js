@@ -19,7 +19,7 @@ export const isAuthorized = (req, res, next) => {
 };
 
 export const hasRoles = (...roles) => {
-  // Check if user has required role (manager, technical_specialist, project_manager)
+  // Check if user has required role (manager, technical_specialist, project_manager/manager)
   return (req, res, next) => {
     if (!roles.includes(req.user.accountType)) {
       return res.status(403).json({ error: "Forbidden: Insufficient rights" });
