@@ -5,6 +5,7 @@ import Topics from "./features/forum/Topics.jsx";
 import Posts from "./features/forum/Posts.jsx";
 import RegisterPage from "./features/auth/Register.jsx";
 import LoginPage from "./features/auth/Login.jsx";
+import Todo from "./features/todos/TodoList.jsx";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             {/* Add more routes here */}
             <Route path={"/login"} element={<LoginPage />} />
             <Route path={"/register"} element={<RegisterPage />} />
+            <Route path={"/todos"} element={<Todo />} />
           </Routes>
         </main>
       </div>
