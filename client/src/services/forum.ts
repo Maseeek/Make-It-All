@@ -60,7 +60,7 @@ export async function getTopic(id: string): Promise<Topic | null> {
 export async function addTopic(topic: Topic): Promise<void | string> {
   const reqHeaders = new Headers();
   reqHeaders.append("Authorization", `Bearer ${getCurrentToken()}`);
-
+  reqHeaders.append("Content-Type", "application/json");
   let list = await getTopics();
   if (list.find((x) => x.TopicID === topic.TopicID)) {
     return "Topic with this ID already exists.";
@@ -68,6 +68,7 @@ export async function addTopic(topic: Topic): Promise<void | string> {
   const req = new Request(`${BASE_URL}/topics`, {
     method: "POST",
     headers: reqHeaders,
+    body: JSON.stringify(topic),
   });
   const response = await fetch(req);
   if (!response.ok) {

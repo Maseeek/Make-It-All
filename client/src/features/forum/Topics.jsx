@@ -43,6 +43,7 @@ export default function TopicList() {
     if (!Title || !Description) return;
     try {
       const topic = new Topic(Title, Description);
+      console.log("Creating topic:", topic);
       await addTopic(topic);
       // refresh list after add
       const t = await getTopics();

@@ -17,7 +17,7 @@ router.use((req, res, next) => {
 // for all posts, need tech specialist
 router.use((req, res, next) => {
   if (req.method === "POST") {
-    return hasRoles("technical_specialist", "admin")(req, res, next);
+    return hasRoles("technical_specialist", "manager", "admin")(req, res, next);
   }
   next();
 });
@@ -73,6 +73,7 @@ router.delete("/topics/:id", (req, res) => {
 router.post("/topics", (req, res) => {
   const db = req.app.locals.db;
   const { Title, Description } = req.body;
+  console.log("Request body:", req);
   console.log(`Creating topic: ${Title} - ${Description}`);
   db.run(
     "INSERT INTO tblTopic (Title, Description, CreatedBy) VALUES (?, ?, ?)",

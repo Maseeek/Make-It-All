@@ -8,13 +8,27 @@ export const SECRET = "TEMPSECRET1212";
 // --- Mock Database ---
 // In a real app, you'd fetch this from your database
 export const saltRounds = 10;
-const MOCK_USER = {
-  id: "user-001",
-  email: "maciek@make-it-all.co.uk",
-  accountType: "admin",
-  // Use hashSync to create the hash on server start
-  passwordHash: bcrypt.hashSync("Password1!", saltRounds),
-};
+export const MOCK_USERS = [
+  {
+    email: "maciek@make-it-all.co.uk",
+    accountType: "manager",
+  },
+  {
+    email: "justyn@make-it-all.co.uk",
+    accountType: "technical_specialist",
+    passwordHash: bcrypt.hashSync("Password1!", saltRounds),
+  },
+  {
+    email: "admin@make-it-all.co.uk",
+    accountType: "admin",
+    passwordHash: bcrypt.hashSync("Password1!", saltRounds),
+  },
+  {
+    email: "preet@make-it-all.co.uk",
+    accountType: "user",
+    passwordHash: bcrypt.hashSync("Password1!", saltRounds),
+  },
+];
 const EXPIRES = "2d"; // Token expiration time
 
 // This handles POST requests to /api/auth/register
@@ -22,11 +36,11 @@ router.post("/register", async (req, res) => {
   // Made async
   try {
     // 1. Get the data from the frontend's request
-    const { email, password, accountType } = req.body;
+    const { email, password } = req.body;
     const allowedDomain = process.env.ALLOWED_EMAIL_DOMAIN;
 
     // --- Validation ---
-    if (!email || !password || !accountType) {
+    if (!email || !password) {
       // 400 = Bad Request
       return res.status(400).json({
         error: "Missing required fields (email, password, accountType).",
@@ -57,6 +71,15 @@ router.post("/register", async (req, res) => {
             .json({ error: "User with this email already exists." }); // 409 = Conflict
         }
 
+        // check user is in mock users to get account type
+        const mockUser = MOCK_USERS.find((user) => user.email === email);
+        if (!mockUser) {
+          return res
+            .status(403)
+            .json({ error: "You are not authorized to register." }); // 403 = Forbidden
+        }
+        const accountType = mockUser.accountType;
+
         // 2. Hash the password
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -78,11 +101,9 @@ router.post("/register", async (req, res) => {
               (err, row) => {
                 if (err) {
                   console.error("Error retrieving user ID:", err);
-                  return res
-                    .status(500)
-                    .json({
-                      error: "Failed to retrieve user ID from database.",
-                    });
+                  return res.status(500).json({
+                    error: "Failed to retrieve user ID from database.",
+                  });
                 }
                 id = row.UserID;
 
