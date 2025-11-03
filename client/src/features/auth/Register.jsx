@@ -49,9 +49,9 @@ export default function Register() {
         e.preventDefault();
         setNotification(null);
 
-        const { email, password, confirmPassword, accountType } = formData; // Make sure to get accountType from state
+        const { email, password, confirmPassword, accountType } = formData;
 
-        // --- Validation Checks ---
+
         if (!email.toLowerCase().endsWith("@make-it-all.co.uk")) {
             setNotification({ type: 'error', text: "Email must end in @make-it-all.co.uk" });
             return;
@@ -70,7 +70,7 @@ export default function Register() {
             return;
         }
 
-        // --- All Validations Passed ---
+
         setLoading(true);
 
         try {
