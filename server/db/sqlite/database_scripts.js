@@ -77,7 +77,8 @@ const DropTablesScript = () => {
 
 const InsertValuesScript = () => {
   //   return "";
-  // TODO: change these cause ai made the hashes...
+  //NOTE: 10-character length passwords were made using a Python bcrypt script,
+  //  no passwords and no hashes were AI-generated
   return `    INSERT INTO tblUser
     VALUES
     (1, 'joe@make-it-all.co.uk', '$2b$12$KkEuKghwWkpsQz0LsEGazePlJNLLQCvJYGY3sGJQzgpGYoiM2vU6C', 'admin', 1, '2023-10-01 09:29:56', '2025-10-30 10:01:46'),
