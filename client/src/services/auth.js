@@ -81,3 +81,33 @@ export async function getUserRole() {
   if (!user) throw new Error("401");
   return user.accountType; // assuming the token payload has an 'accountType' field
 }
+
+export function isLoggedIn(){
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    return false;
+  }
+
+  try {
+    // Decode the token to get the payload
+    const payload = JSON.parse(atob(token.split('.')[1]));
+
+    // Get the expiration timestamp (it's in seconds, so multiply by 1000)
+    const expirationDate = new Date(payload.exp * 1000);
+    const now = new Date();
+
+    // Check if the token has expired
+    if (expirationDate < now) {
+      console.log("Token has expired. Logging out.");
+      logout(); // Automatically log out and clear the expired token
+      return false;
+    }
+
+    return true; // Token exists and is not expired
+
+  } catch (error) {
+    console.error("Failed to parse token, logging out.", error);
+    logout(); // If token is malformed, log out
+    return false;
+  }
+}

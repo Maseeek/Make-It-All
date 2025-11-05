@@ -7,11 +7,13 @@ import ProjectTasks from "./features/tasks/Tasks.jsx";
 import RegisterPage from "./features/auth/Register.jsx";
 import LoginPage from "./features/auth/Login.jsx";
 import Todo from "./features/todos/TodoList.jsx";
+import NavBar from "./components/Navbar.jsx";
 
 function App() {
   return (
     <Router>
       <div className="App">
+        <NavBar />
         <main>
           <Routes>
             {/* default to dashboard */}
