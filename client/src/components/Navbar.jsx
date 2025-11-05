@@ -1,4 +1,4 @@
-import { useState } from 'react'; // NEW: Import useState for mobile menu toggle
+import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom'; // NEW: Import NavLink for active styling and SPA routing
 import { isLoggedIn, logout, getCurrentUser } from "../services/auth.js";
 import { House, Menu, LogIn, LogOut, X } from "lucide-react"; // NEW: Added X for close icon
@@ -7,14 +7,31 @@ import '../styles/Navbar.css'; // NEW: Import the new CSS file
 export default function Navbar() {
     // NEW: State to manage the mobile menu's visibility
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [authTrigger, setAuthTrigger] = useState(0);
+
+    useEffect(() => {
+        const handleAuthChange = () => {
+            setAuthTrigger(prev => prev + 1);
+        };
+
+        // listen for the authchange
+        window.addEventListener('authChange', handleAuthChange);
+
+        // remove the event listener
+        return () => {
+            window.removeEventListener('authChange', handleAuthChange);
+        };
+    }, []);
 
     const user = getCurrentUser();
     const userType = user?.accountType;
     const loggedIn = isLoggedIn();
 
+
     const handleAuthButtonClick = () => {
         if (loggedIn) {
             logout();
+            window.dispatchEvent(new Event('authChange'));
             window.location.href = "/login"; // Redirect to login page after logout
         } else {
             window.location.href = "/login"; // Redirect to login page
