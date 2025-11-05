@@ -9,7 +9,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import "../../styles/index.css";
 
-import "./Tasks.css";
+import "../../styles/Tasks.css";
 export default function ProjectTasks() {
   const nav = useNavigate();
   const [userRole, setUserRole] = useState(null);
