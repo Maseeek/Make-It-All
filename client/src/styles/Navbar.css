@@ -191,21 +191,18 @@
     display: flex;
 }
 
-/* Make mobile auth button full width for impact */
 .navbar-auth-mobile .auth-button {
     width: 100%;
     justify-content: center;
 }
 
-/* --- Responsive Breakpoint --- */
 @media (max-width: 768px) {
-    /* Hide desktop items */
+    /*hide item from desktop*/
     .navbar-nav-desktop,
     .navbar-auth-desktop {
         display: none;
     }
-
-    /* Show mobile items */
+    /*shows mobile navbar*/
     .navbar-toggle {
         display: block;
     }

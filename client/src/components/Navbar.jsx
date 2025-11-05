@@ -63,8 +63,8 @@ export default function Navbar() {
 
                 {/* Home/Brand Link */}
                 <NavLink to="/" className="navbar-logo" onClick={closeMobileMenu}>
-                    <House size={28} />
-                    <span className="navbar-logo-text">MyProject</span>
+                    {/*<House size={28} />*/}
+                    <span className="navbar-logo-text">Make It All</span>
                 </NavLink>
 
                 {/* Desktop Navigation */}
