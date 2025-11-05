@@ -1,5 +1,5 @@
 import { useState } from "react";
-// import "../../styles/styles.css";
+// import "../../styles/Todo.css";
 
 export default function TodoList() {
   const [tasks, setTasks] = useState({
