@@ -16,7 +16,7 @@ export const MOCK_USERS = [
   {
     email: "justyn@make-it-all.co.uk",
     accountType: "technical_specialist",
-    passwordHash: bcrypt.hashSync("Password1!", saltRounds),
+    passwordHash: bcrypt.hashSync("Admin1!", saltRounds),
   },
   {
     email: "admin@make-it-all.co.uk",
