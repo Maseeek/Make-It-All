@@ -12,17 +12,13 @@ function App() {
   return (
     <Router>
       <div className="App">
-        {/*<header >*/}
-        {/*  <h1>Make-It-All</h1>*/}
-        {/*  <p>The best forum/to-do list thing ever!</p>*/}
-        {/*</header>*/}
         <main>
           <Routes>
             {/* default to dashboard */}
             <Route path="/" element={<Dash />} />
+            {/* Add more routes here */}
             <Route path="/forum" element={<Topics />} />
             <Route path="/forum/:id" element={<Posts />} />
-            {/* Add more routes here */}
             <Route path={"/login"} element={<LoginPage />} />
             <Route path={"/register"} element={<RegisterPage />} />
             <Route path={"/todos"} element={<Todo />} />
