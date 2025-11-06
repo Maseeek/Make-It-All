@@ -1,23 +1,25 @@
 /* i used my own css but i asked gemini to enhance and make it look more professional so some stuff like the change in font was gemini's idea however the core principles and style is my own*/
 
-/* Import modern web font */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+/*!* Import modern web font *!*/
+/*@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');*/
 
-:root {
-    /* Refined & Brighter Accent Palette */
-    --color-accent: #9f55ff;
-    --color-accent-dark: #8e48e8;
-    --color-accent-darker: #7d3ad5;
-    --color-accent-focus-ring: rgba(159, 85, 255, 0.25);
+/*:root {*/
+/*    !* Refined & Brighter Accent Palette *!*/
+/*    --color-accent: #9f55ff;*/
+/*    --color-accent-dark: #8e48e8;*/
+/*    --color-accent-darker: #7d3ad5;*/
+/*    --color-accent-focus-ring: rgba(159, 85, 255, 0.25);*/
 
-    /* Glass & Shadow Palette */
-    --color-bg-glass: rgba(18, 18, 18, 0.65);
-    --color-border-glass: rgba(255, 255, 255, 0.1);
-    --color-shadow: rgba(0, 0, 0, 0.35);
+/*    !* Glass & Shadow Palette *!*/
+/*    --color-bg-glass: rgba(18, 18, 18, 0.65);*/
+/*    --color-border-glass: rgba(255, 255, 255, 0.1);*/
+/*    --color-shadow: rgba(0, 0, 0, 0.35);*/
 
-    /* Typography */
-    --font-main: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-}
+/*    !* Typography *!*/
+/*    --font-main: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;*/
+/*}*/
+
+/* this is now stored in the index.css so that it is globally applied to all elements */
 
 html, body {
     margin: 0;

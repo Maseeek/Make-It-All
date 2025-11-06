@@ -8,7 +8,7 @@
   /* Glass & Shadow Palette */
   --color-bg-glass: rgba(18, 18, 18, 0.65);
   --color-border-glass: rgba(255, 255, 255, 0.1);
-  --color-shadow: rgba(0, 0, 0, 0.35);
+  --color-shadow: rgba(177, 171, 171, 0.35);
 
   /* Typography */
   --font-main: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;

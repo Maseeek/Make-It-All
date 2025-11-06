@@ -1,5 +1,5 @@
 import { useState } from "react";
-// import "../../styles/Todo.css";
+import "../../styles/Todo.css";
 
 export default function TodoList() {
   const [tasks, setTasks] = useState({
@@ -112,7 +112,7 @@ export default function TodoList() {
   return (
     <div>
 
-      <main>
+      <main className={"todo-main"}>
         {renderColumn("todo", "To-Do")}
         {renderColumn("working", "Working")}
         {renderColumn("done", "Done")}
