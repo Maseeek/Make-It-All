@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'; // NEW: Import NavLink for active st
 import { isLoggedIn, logout, getCurrentUser } from "../services/auth.js";
 import { House, Menu, LogIn, LogOut, X } from "lucide-react"; // NEW: Added X for close icon
 import '../styles/Navbar.css'; // NEW: Import the new CSS file
-import logo from '../assets/makeitall-removebg-preview.png';
+import logo from '../assets/makeitalllogo.png';
 
 export default function Navbar() {
     // NEW: State to manage the mobile menu's visibility
