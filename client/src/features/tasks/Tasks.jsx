@@ -161,165 +161,165 @@ export default function ProjectTasks() {
   if (error) return <div className="error">Error: {error}</div>;
 
   return (
-    <div>
-      {userRole === "manager" || userRole === "admin" ? (
-        <div>
-          <h2>All Tasks</h2>
-          <button onClick={() => nav(-1)}>Go Back</button>
+      <div className={"tasks-page"}>
+        {userRole === "manager" || userRole === "admin" ? (
+            // Use a Fragment instead of an extra <div>
+            <>
+              <h2>All Tasks</h2>
+              <div className="tasks-container">
+                {tasks.map((task) => (
+                    <div key={task.TaskID} className="task-card">
+                      <h3>{task.Title}</h3>
+                      <p>{task.Description}</p>
+                      <p>Priority: {task.Priority}</p>
+                      <div>
+                        <label htmlFor={`assigned-${task.TaskID}`}>
+                          Assigned To:{" "}
+                        </label>
+                        <select
+                            id={`assigned-${task.TaskID}`}
+                            value={task.UserID}
+                            onChange={(e) =>
+                                handleAssignedToChange(task.TaskID, e.target.value)
+                            }
+                        >
+                          {users.map((user) => (
+                              <option key={user.UserID} value={user.UserID}>
+                                {user.Email} ({user.Role})
+                              </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div>
+                        <label htmlFor={`status-${task.TaskID}`}>Status: </label>
+                        <select
+                            id={`status-${task.TaskID}`}
+                            value={task.Status}
+                            onChange={(e) =>
+                                handleStatusChange(task.TaskID, e.target.value)
+                            }
+                        >
+                          <option value="pending">Pending</option>
+                          <option value="in_progress">In Progress</option>
+                          <option value="completed">Completed</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label htmlFor={`time-${task.TaskID}`}>
+                          Time Spent (hours):{" "}
+                        </label>
+                        <input
+                            type="number"
+                            id={`time-${task.TaskID}`}
+                            min="0"
+                            step="0.5"
+                            value={task.TimeSpent || 0}
+                            onChange={(e) =>
+                                handleTimeSpentChange(task.TaskID, e.target.value)
+                            }
+                            placeholder="0"
+                        />
+                      </div>
+                      <p>Due: {new Date(task.DueDate).toLocaleDateString()}</p>
+                    </div>
+                ))}
+              </div>
 
-          <div className="tasks-container">
-            {tasks.map((task) => (
-              <div key={task.TaskID} className="task-card">
-                <h3>{task.Title}</h3>
-                <p>{task.Description}</p>
-                <p>Priority: {task.Priority}</p>
+              <div id={"create-task-card"} className={"task-card"}>
+                <h3>Create New Task</h3>
                 <div>
-                  <label htmlFor={`assigned-${task.TaskID}`}>
-                    Assigned To:{" "}
-                  </label>
-                  <select
-                    id={`assigned-${task.TaskID}`}
-                    value={task.UserID}
-                    onChange={(e) =>
-                      handleAssignedToChange(task.TaskID, e.target.value)
-                    }
-                  >
+                  <label htmlFor="new-task-title">Title: *</label>
+                  <input
+                      type="text"
+                      id="new-task-title"
+                      placeholder="Task title"
+                      required
+                  />
+                </div>
+                <div>
+                  <label htmlFor="new-task-description">Description:</label>
+                  <textarea
+                      id="new-task-description"
+                      placeholder="Task description"
+                      rows="3"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="new-task-assigned">Assigned To: *</label>
+                  <select id="new-task-assigned" required>
+                    <option value="">Select a user</option>
                     {users.map((user) => (
-                      <option key={user.UserID} value={user.UserID}>
-                        {user.Email} ({user.Role})
-                      </option>
+                        <option key={user.UserID} value={user.UserID}>
+                          {user.Email} ({user.Role})
+                        </option>
                     ))}
                   </select>
                 </div>
                 <div>
-                  <label htmlFor={`status-${task.TaskID}`}>Status: </label>
-                  <select
-                    id={`status-${task.TaskID}`}
-                    value={task.Status}
-                    onChange={(e) =>
-                      handleStatusChange(task.TaskID, e.target.value)
-                    }
-                  >
-                    <option value="pending">Pending</option>
-                    <option value="in_progress">In Progress</option>
-                    <option value="completed">Completed</option>
+                  <label htmlFor="new-task-priority">Priority:</label>
+                  <select id="new-task-priority" defaultValue="medium">
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
                   </select>
                 </div>
                 <div>
-                  <label htmlFor={`time-${task.TaskID}`}>
-                    Time Spent (hours):{" "}
-                  </label>
-                  <input
-                    type="number"
-                    id={`time-${task.TaskID}`}
-                    min="0"
-                    step="0.5"
-                    value={task.TimeSpent || 0}
-                    onChange={(e) =>
-                      handleTimeSpentChange(task.TaskID, e.target.value)
-                    }
-                    placeholder="0"
-                  />
+                  <label htmlFor="new-task-due">Due Date: *</label>
+                  <input type="date" id="new-task-due" required />
                 </div>
-                <p>Due: {new Date(task.DueDate).toLocaleDateString()}</p>
+                <button onClick={handleCreateTask}>Create Task</button>
               </div>
-            ))}
-            {/* New Task Form */}
-            <div className="task-card new">
-              <h3>Create New Task</h3>
-              <div>
-                <label htmlFor="new-task-title">Title: *</label>
-                <input
-                  type="text"
-                  id="new-task-title"
-                  placeholder="Task title"
-                  required
-                />
-              </div>
-              <div>
-                <label htmlFor="new-task-description">Description:</label>
-                <textarea
-                  id="new-task-description"
-                  placeholder="Task description"
-                  rows="3"
-                />
-              </div>
-              <div>
-                <label htmlFor="new-task-assigned">Assigned To: *</label>
-                <select id="new-task-assigned" required>
-                  <option value="">Select a user</option>
-                  {users.map((user) => (
-                    <option key={user.UserID} value={user.UserID}>
-                      {user.Email} ({user.Role})
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label htmlFor="new-task-priority">Priority:</label>
-                <select id="new-task-priority" defaultValue="medium">
-                  <option value="low">Low</option>
-                  <option value="medium">Medium</option>
-                  <option value="high">High</option>
-                </select>
-              </div>
-              <div>
-                <label htmlFor="new-task-due">Due Date: *</label>
-                <input type="date" id="new-task-due" required />
-              </div>
-              <button onClick={handleCreateTask}>Create Task</button>
-            </div>
-          </div>
-        </div>
-      ) : userRole === "technical_specialist" ? (
-        <div>
-          <h2>Assigned Tasks </h2>
-          <button onClick={() => nav(-1)}>Go Back</button>
+            </>
+        ) : userRole === "technical_specialist" ? (
+            // Also use a Fragment here for consistency
+            <>
+              <h2>Assigned Tasks </h2>
+              <button onClick={() => nav(-1)}>Go Back</button>
 
-          <div className="tasks-container">
-            {tasks.map((task) => (
-              <div key={task.TaskID} className="task-card">
-                <h3>{task.Title}</h3>
-                <p>{task.Description}</p>
-                <p>Priority: {task.Priority}</p>
-                <div>
-                  <label htmlFor={`status-${task.TaskID}`}>Status: </label>
-                  <select
-                    id={`status-${task.TaskID}`}
-                    value={task.Status}
-                    onChange={(e) =>
-                      handleStatusChange(task.TaskID, e.target.value)
-                    }
-                  >
-                    <option value="pending">Pending</option>
-                    <option value="in_progress">In Progress</option>
-                    <option value="completed">Completed</option>
-                  </select>
-                </div>
-                <div>
-                  <label htmlFor={`time-${task.TaskID}`}>
-                    Time Spent (hours):{" "}
-                  </label>
-                  <input
-                    type="number"
-                    id={`time-${task.TaskID}`}
-                    min="0"
-                    step="0.5"
-                    value={task.TimeSpent || 0}
-                    onChange={(e) =>
-                      handleTimeSpentChange(task.TaskID, e.target.value)
-                    }
-                    placeholder="0"
-                  />
-                </div>
-                <p>Due: {new Date(task.DueDate).toLocaleDateString()}</p>
+              <div className="tasks-container">
+                {tasks.map((task) => (
+                    <div key={task.TaskID} className="task-card">
+                      <h3>{task.Title}</h3>
+                      <p>{task.Description}</p>
+                      <p>Priority: {task.Priority}</p>
+                      <div>
+                        <label htmlFor={`status-${task.TaskID}`}>Status: </label>
+                        <select
+                            id={`status-${task.TaskID}`}
+                            value={task.Status}
+                            onChange={(e) =>
+                                handleStatusChange(task.TaskID, e.target.value)
+                            }
+                        >
+                          <option value="pending">Pending</option>
+                          <option value="in_progress">In Progress</option>
+                          <option value="completed">Completed</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label htmlFor={`time-${task.TaskID}`}>
+                          Time Spent (hours):{" "}
+                        </label>
+                        <input
+                            type="number"
+                            id={`time-${task.TaskID}`}
+                            min="0"
+                            step="0.5"
+                            value={task.TimeSpent || 0}
+                            onChange={(e) =>
+                                handleTimeSpentChange(task.TaskID, e.target.value)
+                            }
+                            placeholder="0"
+                        />
+                      </div>
+                      <p>Due: {new Date(task.DueDate).toLocaleDateString()}</p>
+                    </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
-      ) : (
-        <p>You do not have access to view tasks.</p>
-      )}
-    </div>
+            </>
+        ) : (
+            <p>You do not have access to view tasks.</p>
+        )}
+      </div>
   );
 }
