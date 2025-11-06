@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-// import "./styles/App.css";
+import "./styles/App.css";
 import Dash from "./features/dashboard/Dashboard";
 import Topics from "./features/forum/Topics.jsx";
 import Posts from "./features/forum/Posts.jsx";

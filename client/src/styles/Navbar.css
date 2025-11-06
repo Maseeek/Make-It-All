@@ -17,6 +17,7 @@
     left: 0;
     width: 100%;
     z-index: 1000;
+    height: 4.5rem;
 
     font-family: var(--font-main), serif;
     color: rgba(255, 255, 255, 0.9);

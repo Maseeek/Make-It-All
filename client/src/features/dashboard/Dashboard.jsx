@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { getCurrentUser, logout } from "../../services/auth";
+import "../../styles/Dashboard.css"
 
 // Dashboard component
 // Role-based dashboard for managers and technical specialists
