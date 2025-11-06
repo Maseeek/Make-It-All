@@ -50,6 +50,11 @@
     transition: color 0.3s ease;
 }
 
+.navbar-logo-image{
+    height: 3rem; /* Fixed height for logo image */
+    width: auto;
+}
+
 .navbar-logo:hover {
     color: var(--color-accent);
 }

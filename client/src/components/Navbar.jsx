@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom'; // NEW: Import NavLink for active st
 import { isLoggedIn, logout, getCurrentUser } from "../services/auth.js";
 import { House, Menu, LogIn, LogOut, X } from "lucide-react"; // NEW: Added X for close icon
 import '../styles/Navbar.css'; // NEW: Import the new CSS file
+import logo from '../assets/makeitall-removebg-preview.png';
 
 export default function Navbar() {
     // NEW: State to manage the mobile menu's visibility
@@ -81,6 +82,7 @@ export default function Navbar() {
                 {/* Home/Brand Link */}
                 <NavLink to="/" className="navbar-logo" onClick={closeMobileMenu}>
                     {/*<House size={28} />*/}
+                    <img src={logo} alt="Make It All Logo" className="navbar-logo-image" />
                     <span className="navbar-logo-text">Make It All</span>
                 </NavLink>
 
