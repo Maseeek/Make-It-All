@@ -35,3 +35,24 @@
     cursor: pointer;
   padding: 1rem;
 }
+
+#create-task-card textarea{
+    width: 50%;
+    background-color: var(--color-bg-glass);
+    color: white;
+    border: 1px solid var(--color-accent);
+}
+
+.task-card select{
+  width: 100%;
+  background-color: var(--color-bg-glass);
+  color: white;
+  border: 1px solid var(--color-accent);
+}
+
+.task-card input{
+    width: 100%;
+    background-color: var(--color-bg-glass);
+    color: white;
+    border: 1px solid var(--color-accent);
+}

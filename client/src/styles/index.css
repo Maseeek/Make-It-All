@@ -142,3 +142,47 @@ textarea {
 ::-webkit-scrollbar {
   display: none;
 }
+
+button {
+  padding: 0.5rem;
+  /*font-size: 1.05rem;*/
+  /*font-weight: 600;*/
+
+  /* Gradient Button */
+  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-dark));
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+
+  /*text-transform: uppercase;*/
+  /*letter-spacing: 0.8px;*/
+
+  /* Ensures buttons don't shrink in flex containers */
+  flex-shrink: 0;
+}
+
+button:disabled {
+  background: #555;
+  color: #999;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  filter: none;
+}
+
+button:not(:disabled):hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(159, 85, 255, 0.3);
+  filter: brightness(1.1);
+}
+
+button:not(:disabled):active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(159, 85, 255, 0.2);
+  filter: brightness(0.95);
+}
