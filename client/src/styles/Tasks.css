@@ -30,9 +30,9 @@
   /*width: 90%;*/
   /*display: flex;*/
   flex-direction: column;
-    border: 2px dashed var(--color-border-glass);
-    align-items: center;
-    cursor: pointer;
+  border: 2px dashed var(--color-border-glass);
+  align-items: center;
+  cursor: pointer;
   padding: 1rem;
 }
 
