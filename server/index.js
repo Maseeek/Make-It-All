@@ -32,9 +32,10 @@ app.get("/api/health", (req, res) => {
 });
 
 // Import routes (to be implemented)
-import authRoutes from "./routes/auth.js";
+import authRoutes, {saltRounds} from "./routes/auth.js";
 import todoRoutes from "./routes/todos.js";
 import forumRoutes from "./routes/forum.js";
+import bcrypt from "bcrypt";
 
 // Use routes
 app.use("/api/auth", authRoutes);
@@ -46,6 +47,14 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ error: "Something went wrong!" });
 });
+
+
+const [email, hashedPassword, accountType] = ["admin@make-it-all.co.uk", bcrypt.hashSync("Password1!", 10), "admin"]
+db.run(
+    "INSERT INTO tblUser (Email, Password, Role) VALUES (?, ?, ?)",
+    [email, hashedPassword, accountType]
+)
+
 
 // Start server
 app.listen(PORT, () => {

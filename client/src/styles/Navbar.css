@@ -1,0 +1,215 @@
+/* --- Navbar.css --- */
+/* Assumes variables from Auth.css are loaded globally (e.g., in index.css) */
+
+/* Main Navbar Bar */
+.navbar {
+    /* Glassmorphism background from Auth.css */
+    background-color: var(--color-bg-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px); /* Safari support */
+
+    /* Subtle bottom border */
+    border-bottom: 1px solid var(--color-border-glass);
+
+    /* Fixed position to float over content */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    height: 4.5rem;
+
+    font-family: var(--font-main), serif;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Inner container for layout */
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    /* Constrain width and center */
+    max-width: 1400px;
+    margin: 0 auto;
+
+    /* Padding and height */
+    padding: 0 2rem; /* 32px side padding */
+    height: 70px; /* Standard navbar height */
+}
+
+/* Logo / Home Link */
+.navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem; /* 12px */
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.25rem; /* 20px */
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.navbar-logo-image{
+    height: 3rem; /* Fixed height for logo image */
+    width: auto;
+}
+
+.navbar-logo:hover {
+    color: var(--color-accent);
+}
+
+.navbar-logo-text {
+    /* Hide text on very small screens if needed, but here we keep it */
+    font-weight: 700;
+}
+
+/* --- Desktop Navigation --- */
+.navbar-nav-desktop {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 0.5rem; /* 8px */
+}
+
+.nav-link {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    padding: 0.75rem 1rem; /* 12px 16px */
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+}
+
+/* Active link style */
+.nav-link.active {
+    color: var(--color-accent);
+    font-weight: 600;
+    background-color: rgba(159, 85, 255, 0.1); /* Use accent focus ring color */
+}
+
+/* Auth Button */
+.auth-button {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem; /* 10px */
+
+    /* Use accent color for button */
+    background-color: var(--color-accent);
+    color: white;
+
+    border: none;
+    border-radius: 8px;
+    padding: 0.65rem 1.25rem; /* 10px 20px */
+
+    font-family: var(--font-main), serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+
+    /* Match transitions from Auth.css */
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.auth-button:hover {
+    background-color: var(--color-accent-dark);
+    /* Lift effect */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(159, 85, 255, 0.25);
+}
+
+.auth-button:active {
+    transform: translateY(-1px);
+    background-color: var(--color-accent-darker);
+}
+
+/* --- Mobile --- */
+.navbar-toggle {
+    display: none; /* Hidden on desktop */
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 0.5rem; /* Click target */
+    line-height: 0; /* Align icon */
+    border-radius: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navbar-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--color-accent);
+}
+
+/* Mobile Menu Container */
+.navbar-mobile-menu {
+    /* Hidden by default */
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* 24px */
+
+    /* Positioned absolutely below the navbar */
+    position: absolute;
+    top: 70px; /* Aligns with navbar bottom */
+    left: 0;
+    width: 100%;
+
+    /* Glassmorphism style */
+    background-color: var(--color-bg-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    /* Border to separate from navbar */
+    border-top: 1px solid var(--color-border-glass);
+    box-shadow: 0 16px 40px var(--color-shadow);
+
+    padding: 1.5rem 2rem; /* 24px 32px */
+
+    /* Animation */
+    opacity: 0;
+    transform: translateY(-20px);
+    visibility: hidden;
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out, visibility 0.3s;
+}
+
+.navbar-mobile-menu.open {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+}
+
+.navbar-nav-mobile {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 0.5rem;
+}
+
+.navbar-auth-mobile {
+    display: flex;
+}
+
+.navbar-auth-mobile .auth-button {
+    width: 100%;
+    justify-content: center;
+}
+
+@media (max-width: 768px) {
+    /*hide item from desktop*/
+    .navbar-nav-desktop,
+    .navbar-auth-desktop {
+        display: none;
+    }
+    /*shows mobile navbar*/
+    .navbar-toggle {
+        display: block;
+    }
+}

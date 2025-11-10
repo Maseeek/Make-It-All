@@ -74,7 +74,7 @@ export default function TopicList() {
   return (
     <div>
       <h2>Forum Topics</h2>
-      <button onClick={() => nav(-1)}>Go Back</button>
+      {/*<button onClick={() => nav(-1)}>Go Back</button>*/}
 
       <div className="topiclist">
         {topics.map((topic, i) => (

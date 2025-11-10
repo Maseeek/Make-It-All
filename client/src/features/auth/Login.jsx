@@ -64,6 +64,9 @@ function Login() {
 
     try {
       await login(email, password);
+
+      window.dispatchEvent(new Event('authChange'));
+
       setNotification({
         type: "success",
         text: "Successfully Logged In. Now redirecting ...",

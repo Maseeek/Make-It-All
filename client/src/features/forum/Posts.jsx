@@ -78,7 +78,7 @@ export default function PostList() {
     <div>
       {/* <h2>Posts</h2> */}
       {/* <p>Posts for the selected topic ({id}) will appear here</p> */}
-      <button onClick={() => nav(-1)}>Go Back</button>
+      <button className={""} onClick={() => nav(-1)}>Go Back</button>
 
       <div className="posts">
         <div className="post firstpost">
