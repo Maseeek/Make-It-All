@@ -49,7 +49,7 @@ export default function Navbar() {
         setIsMobileMenuOpen(false);
     }
 
-    const verifiedUser = (userType === "technical_specialist" || userType === "project_manager" || userType === "admin");
+    const verifiedUser = (userType === "technical_specialist" || userType === "manager" || userType === "admin");
 
     // NEW: We define the links here to reuse them in desktop and mobile
     const navLinks = (
