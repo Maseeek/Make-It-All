@@ -1,7 +1,7 @@
 //Dummy data (Note: AI generation was used for the dummy values in tblTopic)
 const createTablesScript = () => {
   return `
-    CREATE TABLE tblUser (
+    CREATE TABLE IF NOT EXISTS tblUser (
         UserID INTEGER PRIMARY KEY AUTOINCREMENT,
         Email TEXT NOT NULL UNIQUE,
         Password TEXT NOT NULL,
@@ -11,7 +11,7 @@ const createTablesScript = () => {
         UpdatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
     );
 
-    CREATE TABLE tblTopic (
+    CREATE TABLE IF NOT EXISTS tblTopic (
         TopicID INTEGER PRIMARY KEY AUTOINCREMENT,
         Title TEXT NOT NULL CHECK(LENGTH(Title) <= 191 AND LENGTH(Title) > 0),
         Description TEXT,
@@ -24,7 +24,7 @@ const createTablesScript = () => {
     );
 
     -- posts within topics
-    CREATE TABLE tblPost (
+    CREATE TABLE IF NOT EXISTS tblPost (
         PostID INTEGER PRIMARY KEY AUTOINCREMENT,
         TopicID INTEGER NOT NULL,
         Content TEXT NOT NULL CHECK(LENGTH(Content) > 0),
@@ -37,7 +37,7 @@ const createTablesScript = () => {
         FOREIGN KEY (AuthorID) REFERENCES tblUser(UserID) ON DELETE CASCADE
     );
 
-    CREATE TABLE proj_tasks (
+    CREATE TABLE IF NOT EXISTS proj_tasks (
         TaskID INTEGER PRIMARY KEY AUTOINCREMENT,
         UserID INTEGER NOT NULL,
         Title TEXT NOT NULL CHECK(LENGTH(Title) <= 191 AND LENGTH(Title) > 0),
@@ -51,7 +51,7 @@ const createTablesScript = () => {
         FOREIGN KEY (UserID) REFERENCES tblUser(UserID) ON DELETE CASCADE
     );
 
-    CREATE TABLE user_todo (
+    CREATE TABLE IF NOT EXISTS user_todo (
         TaskID INTEGER PRIMARY KEY AUTOINCREMENT,
         UserID INTEGER NOT NULL,
         Title TEXT NOT NULL CHECK(LENGTH(Title) <= 191 AND LENGTH(Title) > 0),
@@ -77,7 +77,8 @@ const DropTablesScript = () => {
 
 const InsertValuesScript = () => {
   //   return "";
-  // TODO: change these cause ai made the hashes...
+  //NOTE: 10-character length passwords were made using a Python bcrypt script,
+  //  no passwords and no hashes were AI-generated
   return `    INSERT INTO tblUser
     VALUES
     (1, 'joe@make-it-all.co.uk', '$2b$12$KkEuKghwWkpsQz0LsEGazePlJNLLQCvJYGY3sGJQzgpGYoiM2vU6C', 'admin', 1, '2023-10-01 09:29:56', '2025-10-30 10:01:46'),
