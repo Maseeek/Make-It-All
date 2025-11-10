@@ -49,12 +49,33 @@ app.use((err, req, res, next) => {
 });
 
 
-const [email, hashedPassword, accountType] = ["admin@make-it-all.co.uk", bcrypt.hashSync("Password1!", 10), "admin"]
-db.run(
-    "INSERT INTO tblUser (Email, Password, Role) VALUES (?, ?, ?)",
-    [email, hashedPassword, accountType]
-)
+// // variable definitions
+const [email, hashedPassword, accountType] = ["admin@make-it-all.co.uk", bcrypt.hashSync("Password1!", 10), "admin"];
+const [email1, hashedPassword1, accountType1] = ["ts@make-it-all.co.uk", bcrypt.hashSync("Password1!", 10), "technical_specialist"];
+const [email2, hashedPassword2, accountType2] = ["manager@make-it-all.co.uk", bcrypt.hashSync("Password1!", 10), "manager"]; // corrected typo
 
+// // sql statement to insert all three rows
+const sql = `
+  INSERT INTO tblUser (Email, Password, Role) VALUES 
+  (?, ?, ?), 
+  (?, ?, ?), 
+  (?, ?, ?)
+`;
+
+// // combine all parameters into one array
+const params = [
+  email, hashedPassword, accountType,
+  email1, hashedPassword1, accountType1,
+  email2, hashedPassword2, accountType2
+];
+
+// // run the single query
+db.run(sql, params, function(err) {
+  if (err) {
+    return console.error('Error inserting initial users:', err.message);
+  }
+  console.log(`Successfully inserted ${this.changes} users.`);
+});
 
 // Start server
 app.listen(PORT, () => {
