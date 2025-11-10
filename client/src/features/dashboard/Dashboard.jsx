@@ -36,7 +36,7 @@ export default function Dashboard() {
   };
 
   const isTechnicalSpecialist = userRole === "technical_specialist";
-  const isProjectManager = userRole === "project_manager";
+  const isProjectManager = userRole === "manager";
   const isAdmin = userRole === "admin";
   const showTasks = isTechnicalSpecialist || isProjectManager || isAdmin;
   const showTodos = isTechnicalSpecialist || isProjectManager || isAdmin;
